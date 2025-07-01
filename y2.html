@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتيجة الطالب</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 16px;
+            padding: 30px 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 600px;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .info {
+            margin-top: 25px;
+            background-color: #eef2ff;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+        ul {
+            padding-right: 20px;
+        }
+        p, li {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        #printBtn {
+            display: none;
+            background-color: #28a745;
+        }
+        #printBtn:hover {
+            background-color: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>ادخل الكود لعرض النتيجة</h2>
+        <input type="text" id="codeInput" placeholder="مثال: 352402359">
+        <button onclick="submitCode()">عرض النتيجة</button>
+
+        <div class="info" id="infoBox"></div>
+
+        <button id="printBtn" onclick="window.print()">🖨️ طباعة / حفظ كـ PDF</button>
+    </div>
+
+    <script>
+        const students = {
+            "352402359": {
+                name: "يوسف رمضان اسماعيل عبد السميع",
+                section: "أولى فيزيائة",
+                grades: [
+                    "Introduction to Programming: 62 - D",
+                    "Calculus II: 75 - B",
+                    "Mechanics I: 60 - D",
+                    "Botany: 87 - A",
+                    "Information Technology: 82 - B+",
+                    "Physics II: 85 - A",
+                    "General Chemistry II: 75 - B",
+                    "Practical Chemistry II: 86 - A",
+                    "Practical Physics II: 93 - A+",
+                    "الأمان المعملي: 89 - A"
+                ],
+                gpa: "3.06",
+                cgpa: "3.333"
+            },
+            "123456789": {
+                name: "أحمد محمد علي",
+                section: "أولى رياضيات",
+                grades: [
+                    "Linear Algebra: 80 - B+",
+                    "Discrete Math: 77 - B",
+                    "Calculus II: 85 - A",
+                    "English II: 88 - A",
+                    "Computer Science I: 90 - A+"
+                ],
+                gpa: "3.75",
+                cgpa: "3.60"
+            }
+            // يمكنك إضافة طلاب آخرين بنفس البنية
+        };
+
+        function submitCode() {
+            const code = document.getElementById("codeInput").value.trim();
+            const infoBox = document.getElementById("infoBox");
+            const printBtn = document.getElementById("printBtn");
+
+            if (students[code]) {
+                const student = students[code];
+                let html = `
+                    <p><strong>الاسم:</strong> ${student.name}</p>
+                    <p><strong>الشعبة:</strong> ${student.section}</p>
+                    <ul>
+                        ${student.grades.map(g => <li>${g}</li>).join("")}
+                    </ul>
+                    <p><strong>المعدل الفصلي:</strong> ${student.gpa}</p>
+                    <p><strong>المعدل التراكمي:</strong> ${student.cgpa}</p>
+                `;
+
+                infoBox.innerHTML = html;
+                infoBox.style.display = "block";
+                printBtn.style.display = "block";
+            } else {
+                infoBox.style.display = "none";
+                printBtn.style.display = "none";
+                alert("الكود غير صحيح. حاول مرة أخرى.");
+            }
+        }
+    </script>
+</body>
+</html>
